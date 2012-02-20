@@ -186,13 +186,7 @@ int ruledengine(struct game *game, struct bintree *node)
 
 	next = evalremove5(node->array, node->num, node->removed) ?
 		remove5(game, node) : half(game, node);
-	if (evalremove5(node->array, node->num, node->removed)) {
-		next = remove5(game, node);
-	}
-	else {
-		next = half(game, node);
-	}
-	
+
 	return ruledengine(game, next);
 }
 
