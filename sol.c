@@ -179,6 +179,13 @@ int ruledengine(struct game *game, struct bintree *node)
 {
 	struct bintree *next;
 
+	if (node->num == node->removed) {
+		game->mindepth = game->ruleddepth = node->depth;
+		return node->depth;
+	}
+
+	next = evalremove5(node->array, node->num, node->removed) ?
+		remove5(game, node) : half(game, node);
 	if (evalremove5(node->array, node->num, node->removed)) {
 		next = remove5(game, node);
 	}
@@ -186,11 +193,6 @@ int ruledengine(struct game *game, struct bintree *node)
 		next = half(game, node);
 	}
 	
-	if (next->num == next->removed) {
-		game->mindepth = game->ruleddepth = next->depth;
-		return next->depth;
-	}
-
 	return ruledengine(game, next);
 }
 
